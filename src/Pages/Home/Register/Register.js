@@ -2,6 +2,7 @@ import { sendEmailVerification } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
@@ -22,6 +23,8 @@ const Register = () => {
     useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
   const [updateProfile, updating, errorUpdating] = useUpdateProfile(auth);
+  const [existingUser, loadingExistingUser, errorExistingUser] =
+    useAuthState(auth);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +36,8 @@ const Register = () => {
     await updateProfile({ displayName: name });
   };
 
-  if (user) {
-    console.log(user);
+  if (user || existingUser) {
+    // console.log(user);
     navigate("/home");
   }
 

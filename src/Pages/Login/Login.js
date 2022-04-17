@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
+  useAuthState,
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
@@ -9,10 +10,15 @@ import auth from "../../firebase.init";
 import Loading from "../Shared/Loading/Loading";
 import SocialLogin from "./SocialLogin/SocialLogin";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const navigate = useNavigate();
+
+  const [user, loading, error] = useAuthState(auth);
 
   const [
     signInWithEmailAndPassword,
@@ -33,11 +39,19 @@ const Login = () => {
 
   const handlePassReset = async () => {
     const email = emailRef.current.value;
-    await sendPasswordResetEmail(email);
-    // alert("Sent email");
+    if (email) {
+      await sendPasswordResetEmail(email);
+      if (errorPassReset) {
+        toast.error(errorPassReset.message);
+      } else {
+        toast.success("Email sent");
+      }
+    } else {
+      toast.warn("Email required");
+    }
   };
 
-  if (userEmailSignIn) {
+  if (userEmailSignIn || user) {
     navigate("/home");
   }
 
@@ -65,10 +79,12 @@ const Login = () => {
             />
           </Form.Group>
           <div className="text-danger my-2">
-            {errorEmailSignin?.message || errorPassReset?.message}
+            {errorEmailSignin?.message ||
+              errorPassReset?.message ||
+              error?.message}
           </div>
           <div className="d-flex justify-content-center my-2">
-            {loadingEmailSignIn ? <Loading /> : ""}
+            {loadingEmailSignIn || loading ? <Loading /> : ""}
           </div>
 
           <div className="d-flex justify-content-center">
@@ -90,7 +106,10 @@ const Login = () => {
               <strong className="text-warning">Forgot Password?</strong>
             </Button>
           </div>
-          <div className="mt-4">
+          <div className="d-flex justify-content-center my-2">
+            {sendingPassReset ? <Loading /> : ""}
+          </div>
+          <div className="mt-2">
             <small>
               New Here?{" "}
               <Link style={{ textDecoration: "none" }} to="/register">
@@ -103,6 +122,7 @@ const Login = () => {
       <div className="d-flex justify-content-center">
         <SocialLogin></SocialLogin>
       </div>
+      <ToastContainer />
     </div>
   );
 };
