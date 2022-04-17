@@ -3,17 +3,25 @@ import { Button, Spinner } from "react-bootstrap";
 import googleLogo from "../../../images/googleLogo.png";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
+import { useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   let errorMsg;
   let loadingAnimation;
   if (error) {
     errorMsg = <p>{error?.message}</p>;
   }
+
   if (loading) {
     loadingAnimation = <Spinner></Spinner>;
   }
+
+  if (user) {
+    navigate("/home");
+  }
+
   return (
     <div>
       <div className="d-flex align-items-center">
@@ -24,12 +32,15 @@ const SocialLogin = () => {
       <h5 className="mt-2 text-center">Social Login</h5>
       <div className="text-danger">{errorMsg}</div>
       <div>{loadingAnimation}</div>
-      <div className="d-flex justify-content-center">
-        <Button variant="dark rounded-pill" onClick={() => signInWithGoogle()}>
-          <img src={googleLogo} alt="" />
-          <span>Sign in using Google</span>
-        </Button>
-      </div>
+      {/* <div className="d-flex justify-content-center"> */}
+      <Button
+        variant="dark rounded-pill w-100"
+        onClick={() => signInWithGoogle()}
+      >
+        <img src={googleLogo} alt="" />
+        <span>Sign in using Google</span>
+      </Button>
+      {/* </div> */}
     </div>
   );
 };

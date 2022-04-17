@@ -68,6 +68,7 @@ const Register = () => {
               type="checkbox"
               label="Accept Terms and condition"
               onClick={() => setTerms(!terms)}
+              className={terms ? "" : "text-danger"}
             />
           </Form.Group>
           <div className="text-danger my-2">{error?.message}</div>

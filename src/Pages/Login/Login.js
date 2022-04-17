@@ -1,6 +1,12 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import auth from "../../firebase.init";
+import Loading from "../Shared/Loading/Loading";
 import SocialLogin from "./SocialLogin/SocialLogin";
 
 const Login = () => {
@@ -8,11 +14,32 @@ const Login = () => {
   const passwordRef = useRef("");
   const navigate = useNavigate();
 
+  const [
+    signInWithEmailAndPassword,
+    userEmailSignIn,
+    loadingEmailSignIn,
+    errorEmailSignin,
+  ] = useSignInWithEmailAndPassword(auth);
+
+  const [sendPasswordResetEmail, sendingPassReset, errorPassReset] =
+    useSendPasswordResetEmail(auth);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    signInWithEmailAndPassword(email, password);
   };
+
+  const handlePassReset = async () => {
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    // alert("Sent email");
+  };
+
+  if (userEmailSignIn) {
+    navigate("/home");
+  }
 
   return (
     <div>
@@ -37,6 +64,12 @@ const Login = () => {
               required
             />
           </Form.Group>
+          <div className="text-danger my-2">
+            {errorEmailSignin?.message || errorPassReset?.message}
+          </div>
+          <div className="d-flex justify-content-center my-2">
+            {loadingEmailSignIn ? <Loading /> : ""}
+          </div>
 
           <div className="d-flex justify-content-center">
             <Button
@@ -45,6 +78,16 @@ const Login = () => {
               type="submit"
             >
               Login
+            </Button>
+          </div>
+          <div className="mt-4">
+            <Button
+              className="m-0 p-0"
+              variant="link"
+              style={{ textDecoration: "none" }}
+              onClick={handlePassReset}
+            >
+              <strong className="text-warning">Forgot Password?</strong>
             </Button>
           </div>
           <div className="mt-4">
