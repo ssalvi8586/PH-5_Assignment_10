@@ -32,7 +32,8 @@ const Services = () => {
   return (
     <div>
       <Container className="my-5">
-        <Row xs={1} md={2} lg={3} className="g-2">
+        <h3 className="text-center mb-5">Services</h3>
+        <Row xs={1} md={2} lg={3} className="g-4">
           {
             packages.map(service => <Col><Service
               key={service.id}

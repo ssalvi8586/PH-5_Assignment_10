@@ -16,7 +16,6 @@ const Register = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const navigate = useNavigate();
-  // const [displayName, setDisplayName] = useState("");
 
   const [terms, setTerms] = useState(false);
   const [createUserWithEmailAndPassword, user, loading, errorCreating] =

@@ -1,8 +1,14 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 
 const Service = (props) => {
-  const { title, description, price, imageUrl } = props.service;
+
+  const navigate = useNavigate();
+
+
+  const { id, title, description, price, imageUrl } = props.service;
   return (
     <div>
       <Card>
@@ -13,7 +19,7 @@ const Service = (props) => {
             {description}
           </Card.Text>
           <strong>BDT {price}</strong>
-          <Button variant="success w-100">Proceed Checkout</Button>
+          <Button variant="success w-100" onClick={() => navigate(`/checkout/${id}`)}>Proceed Checkout</Button >
         </Card.Body>
       </Card>
     </div>
