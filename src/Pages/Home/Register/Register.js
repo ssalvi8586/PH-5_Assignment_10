@@ -82,10 +82,12 @@ const Register = () => {
             />
           </Form.Group>
           <div className="text-danger my-2">
-            {errorCreating?.message || errorUpdating?.message}
+            {errorCreating?.message ||
+              errorUpdating?.message ||
+              errorExistingUser?.message}
           </div>
           <div className="d-flex justify-content-center my-2">
-            {loading || updating ? <Loading /> : ""}
+            {loading || updating || loadingExistingUser ? <Loading /> : ""}
           </div>
 
           <div className="d-flex justify-content-center">
