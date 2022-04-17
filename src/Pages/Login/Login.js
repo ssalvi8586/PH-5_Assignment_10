@@ -5,7 +5,7 @@ import {
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../Shared/Loading/Loading";
 import SocialLogin from "./SocialLogin/SocialLogin";
@@ -17,6 +17,9 @@ const Login = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || '/';
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -52,7 +55,7 @@ const Login = () => {
   };
 
   if (userEmailSignIn || user) {
-    navigate("/home");
+    navigate(from, { replace: true });
   }
 
   return (
