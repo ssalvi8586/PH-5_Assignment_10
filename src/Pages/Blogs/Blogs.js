@@ -3,7 +3,8 @@ import React from 'react';
 const Blogs = () => {
     return (
         <div>
-            this is Blogs
+            <div className="container border my-3"><h5 className='text-center'>Authentication vs Authorization</h5></div>
+            <div className="container border my-3"><h5 className='text-center'>Authentication vs Authorization</h5></div>
         </div>
     );
 };
