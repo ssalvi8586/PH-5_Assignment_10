@@ -32,7 +32,7 @@ const Header = () => {
             {user ? (
               <Nav>
                 <Nav.Link as={Link} to="/login">
-                  <strong>{user.displayName || "Username"}</strong>
+                  <strong>{user.displayName}</strong>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/" onClick={() => signOut(auth)}>
                   <strong>Sign Out</strong>

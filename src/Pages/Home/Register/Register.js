@@ -1,7 +1,10 @@
 import { sendEmailVerification } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import SocialLogin from "../../Login/SocialLogin/SocialLogin";
@@ -12,23 +15,27 @@ const Register = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const navigate = useNavigate();
+  // const [displayName, setDisplayName] = useState("");
 
   const [terms, setTerms] = useState(false);
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, errorCreating] =
+    useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
-  const handleSubmit = (event) => {
+  const [updateProfile, updating, errorUpdating] = useUpdateProfile(auth);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    createUserWithEmailAndPassword(email, password, sendEmailVerification);
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName: name });
   };
 
   if (user) {
     console.log(user);
-    navigate("/login");
+    navigate("/home");
   }
 
   return (
@@ -71,9 +78,11 @@ const Register = () => {
               className={terms ? "" : "text-danger"}
             />
           </Form.Group>
-          <div className="text-danger my-2">{error?.message}</div>
+          <div className="text-danger my-2">
+            {errorCreating?.message || errorUpdating?.message}
+          </div>
           <div className="d-flex justify-content-center my-2">
-            {loading ? <Loading /> : ""}
+            {loading || updating ? <Loading /> : ""}
           </div>
 
           <div className="d-flex justify-content-center">
