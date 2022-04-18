@@ -20,7 +20,7 @@ Hello I am Shariar Sijan Alvi. This is assignment 10, a prctice project created 
 
 ## Run using
 
-To run this project first clone the repo and install dependencies:
+To run this project first clone the repo. Then install dependencies:
 
 ```bash
   npm install
