@@ -1,3 +1,38 @@
+# Doc Deal
+Hello I am Shariar Sijan Alvi. This is assignment 10, a prctice project created with react js.
+
+## Live Site
+
+[FireBase hosting Link](https://independent-service-prov-3a85c.web.app)
+
+## Used Tech
+
+- React, React-Bootstrap  
+- React router was used for routing.  
+- This website is responsive.  
+- Used private route for proceed checkout button.  
+- Authentication and hosting done using firebase.  
+- Blogs contains the answers of 2 questions.  
+- About contains a short writing and my photo.  
+
+
+
+
+## Run using
+
+To run this project first clone the repo and install dependencies:
+
+```bash
+  npm install
+```
+Then:
+
+```bash
+  npm start
+```
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
