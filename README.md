@@ -14,6 +14,9 @@ Hello I am Shariar Sijan Alvi. This is assignment 10, a prctice project created 
 - Authentication and hosting done using firebase.  
 - Blogs contains the answers of 2 questions.  
 - About contains a short writing and my photo.  
+- Login, registration, signout, displayname update using react-firebase-hooks
+- Invalid route oage crated
+- React-toastify used for password reset. 
 
 
 
