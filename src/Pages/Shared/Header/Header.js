@@ -4,6 +4,7 @@ import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../../firebase.init";
+import { HashLink } from 'react-router-hash-link';
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -21,9 +22,10 @@ const Header = () => {
               <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/home#services">
+              {/* <Nav.Link as={HashLink} to="/home#services">
                 Services
-              </Nav.Link>
+              </Nav.Link> */}
+
               <Nav.Link as={Link} to="/about">
                 About
               </Nav.Link>
