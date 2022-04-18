@@ -42,16 +42,23 @@ const Login = () => {
 
   const handlePassReset = async () => {
     const email = emailRef.current.value;
+
     if (email) {
+      console.log(errorPassReset?.message);
       await sendPasswordResetEmail(email);
-      if (errorPassReset) {
-        toast.error(errorPassReset.message);
-      } else {
-        toast.success("Email sent");
-      }
+      toast.success("Email sent");
+      // if (!errorPassReset?.message) {
+      //   toast.success("Email sent");
+      //   console.log(errorPassReset?.message);
+
+      // } else {
+      //   toast.error(errorPassReset.message);
+      //   console.log(errorPassReset?.message);
+      // }
     } else {
       toast.warn("Email required");
     }
+
   };
 
   if (userEmailSignIn || user) {

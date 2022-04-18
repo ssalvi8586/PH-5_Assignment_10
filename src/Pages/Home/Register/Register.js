@@ -1,4 +1,3 @@
-import { sendEmailVerification } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -37,8 +36,10 @@ const Register = () => {
 
   if (user || existingUser) {
     // console.log(user);
-    navigate("/home");
+    navigate("/");
   }
+
+
 
   return (
     <div>
